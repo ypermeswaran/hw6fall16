@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
 
   def movie_params
-    params.require(:movie).permit(:title, :rating, :description, :release_date)
+    params.require(:movie).permit(:title, :rating, :description, :release_date, :search_terms)
   end
 
   def show
@@ -64,5 +64,18 @@ class MoviesController < ApplicationController
   def search_tmdb
     @movies=Movie.find_in_tmdb(params[:search_terms])
   end
+  
+  def add_tmdb
+    puts "here"
+    puts params[:tmdb_movies]
+    puts "after"
+    params[:tmdb_movies].keys.each do |id|
+      puts "id"+id
+      Movie.create_from_tmdb(id)
+    end
+    flash[:notice]="Movies successfully added to Rotten Potatoes"
+    redirect_to movies_path
+  end
+  
 
 end

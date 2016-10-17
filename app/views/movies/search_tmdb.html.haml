@@ -1,0 +1,21 @@
+%h1 The following movies containing were found on TMDB
+
+= form_tag movies_add_tmdb_path do
+  %table#movies
+    %thead
+      %tr
+        %th Movie Title
+        %th Rating
+        %th Release Date
+        %th Select
+    %tbody
+      - @movies.each do |movie|
+        %tr
+          %td= movie[:title]
+          %td= movie[:rating]
+          %td= movie[:release_date]
+          //%td= check_box_tag "tmdb_movies[#{movie[:tmdb_id]}]",0,false, :id => "checkbox_#{movie[:tmdb_id]}"
+          %td= check_box_tag "tmdb_movies[#{movie[:tmdb_id]}]"
+  = submit_tag 'Add Selected Movie', :id => "movies_button"
+
+= link_to 'Return to Movie List', movies_path
